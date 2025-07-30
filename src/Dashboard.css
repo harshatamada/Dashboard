@@ -1,0 +1,120 @@
+.main-container {
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    padding: 30px;
+    background: #f0f4f8;
+    min-height: 100vh;
+  }
+  
+  .title {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .selector {
+    margin: 20px 0;
+  }
+  
+  .selector select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px auto;
+    max-width: 1000px;
+  }
+  
+  .card {
+    border-radius: 12px;
+    padding: 20px;
+    color: #fff;
+    min-width: 220px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .value {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .male {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+  }
+  
+  .female {
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  }
+  
+  .dist {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+  }
+  
+  .first {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+  }
+  
+  .second {
+    background: linear-gradient(135deg, #eecda3, #ef629f);
+  }
+  .third {
+    background: linear-gradient(135deg, #eecda3, #8a62ef);
+  }
+  
+  .highlight {
+    background: linear-gradient(135deg, #DA4453, #89216B);
+  }
+  
+  .year {
+    background: linear-gradient(135deg, #667db6, #0082c8, #0082c8, #667db6);
+  }
+  
+  .clear-btn {
+    margin: 20px;
+    padding: 10px 16px;
+    border: none;
+    background: #ff5252;
+    color: white;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .dashboard-row {
+    margin: 30px auto;
+  }
+  
+  .dashboard-row h3 {
+    margin-bottom: 12px;
+    color: #444;
+  }
+  .search-box {
+    margin: 20px 0;
+    text-align: center;
+  }
+  .search-box input {
+    padding: 10px;
+    width: 60%;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  .search-bar {
+    margin: 1rem 0;
+    text-align: center;
+  }
+  
+  .search-input {
+    padding: 0.5rem;
+    width: 300px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+   
