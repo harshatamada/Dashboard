@@ -1,54 +1,63 @@
 import React, { useState } from 'react';
-import * as XLSX from 'xlsx';
 import './FileUpload.css';
 
-const FileUpload = ({ onDataExtracted }) => {
+const FileUpload = ({ onUploadSuccess }) => {
   const [error, setError] = useState('');
   const [fileName, setFileName] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
     const file = e.target.files[0];
-
     if (!file) {
       setError('Please select a file.');
       return;
     }
 
-    const isExcel =
-      file.type ===
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-      file.type === 'application/vnd.ms-excel';
+    // ✅ Check valid types
+    const isAcceptedType =
+      file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+      file.type === 'application/vnd.ms-excel' ||
+      file.type === 'text/csv';
 
-    if (!isExcel) {
-      setError('Invalid file type. Please upload an Excel file (.xlsx or .xls).');
+    if (!isAcceptedType) {
+      setError('Invalid file type. Please upload .xlsx, .xls, or .csv');
       return;
     }
 
     setError('');
     setFileName(file.name);
 
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      const data = evt.target.result;
-      const workbook = XLSX.read(data, { type: 'binary' });
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
 
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+      const res = await fetch('http://127.0.0.1:5000/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      
 
-      onDataExtracted(jsonData);
-    };
+      if (!res.ok) throw new Error('Upload failed');
+      const result = await res.json();
 
-    reader.readAsBinaryString(file);
+      setMessage(result.message || 'File uploaded successfully ✅');
+
+      if (onUploadSuccess) {
+        onUploadSuccess(); // 🔄 refresh data in parent (App.js)
+      }
+    } catch (err) {
+      console.error('Upload failed:', err);
+      setError('Upload failed. Please try again.');
+    }
   };
 
   return (
     <div className="file-upload">
-      <label className="upload-label">Upload Excel File:</label>
+      <label className="upload-label">Upload Excel/CSV File:</label>
 
       <input
         type="file"
-        accept=".xlsx, .xls"
+        accept=".xlsx, .xls, .csv"
         onChange={handleFileUpload}
         id="fileInput"
         hidden
@@ -62,6 +71,7 @@ const FileUpload = ({ onDataExtracted }) => {
       </button>
 
       {fileName && <p className="file-name">Selected: {fileName}</p>}
+      {message && <p className="success">{message}</p>}
       {error && <p className="error">{error}</p>}
     </div>
   );
